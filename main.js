@@ -1,6 +1,11 @@
 const pacientes = []
 
 function agregarPaciente(nombre, apellido, edad, direccion, diagnostico) {
+  if (!nombre || !apellido || isNaN(edad) || !direccion || !diagnostico) {
+    alert("Por favor, ingrese datos válidos para el paciente.")
+    return false
+  }
+
   pacientes.push({
     nombre,
     apellido,
@@ -8,12 +13,14 @@ function agregarPaciente(nombre, apellido, edad, direccion, diagnostico) {
     direccion,
     diagnostico
   })
+
+  return true
 }
 
 function eliminarPaciente() {
   let listaPacientes = "Lista de pacientes ingresados:\n"
   pacientes.forEach((paciente, index) => {
-    listaPacientes += `${index + 1}. ${paciente.nombre} ${paciente.apellido}\n`
+    listaPacientes += `${index + 1}. ${paciente.nombre} ${paciente.apellido}\n`;
   })
 
   const eliminator = prompt(listaPacientes + "\nIngrese el numero del paciente que desea eliminar:")
@@ -72,9 +79,8 @@ agregarPaciente("Homero J.", "Simpson", 36, "Calle siempreviva 742", "Crayon en 
 agregarPaciente("Peter", "Parker", 16, "69th Road, en Forest Hills", "Delirios de poderes por picadura de araña radioactiva")
 agregarPaciente("Bruce", "Wayne", 40, "Mansion Wayne", "quiroptofobia.")
 
-
 while (true) {
-  const opcion = prompt("Seleccione una opcion:\n1. Agregar paciente\n2. Eliminar paciente\n3. Mostrar propiedades de pacientes\n4. Salir");
+  const opcion = prompt("Seleccione una opción:\n1. Agregar paciente\n2. Eliminar paciente\n3. Mostrar propiedades de pacientes\n4. Salir");
 
   if (opcion === "1") {
     const nombre = prompt("Ingrese el nombre del paciente:")
@@ -82,8 +88,12 @@ while (true) {
     const edad = parseInt(prompt("Ingrese la edad del paciente:"))
     const direccion = prompt("Ingrese la dirección del paciente:")
     const diagnostico = prompt("Ingrese el diagnóstico del paciente:")
-    agregarPaciente(nombre, apellido, edad, direccion, diagnostico)
-    alert("Paciente agregado con éxito.")
+    
+    const pacienteAgregado = agregarPaciente(nombre, apellido, edad, direccion, diagnostico);
+    
+    if (pacienteAgregado) {
+      alert("Paciente agregado con éxito.");
+    }
   } else if (opcion === "2") {
     eliminarPaciente();
   } else if (opcion === "3") {
@@ -91,6 +101,6 @@ while (true) {
   } else if (opcion === "4") {
     break;
   } else {
-    alert("TOSCO TENIAS QUE SER! Opcion invalida! Por favor, seleccione una opcion valida.")
+    alert("Opción inválida. Por favor, seleccione una opción válida.")
   }
 }
